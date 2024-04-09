@@ -34,4 +34,4 @@ jobs:
                   ./rebuild.sh
 
             - name: Push NuGet packages to GitHub.com
-              run: dotnet nuget push *.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/enotefile/index.json --force-english-output --skip-duplicate
+              run: dotnet nuget push .\nuget\*.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/enotefile/index.json --force-english-output --skip-duplicate

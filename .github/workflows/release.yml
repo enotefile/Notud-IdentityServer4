@@ -1,0 +1,37 @@
+name: Release Identity Framework to GitHub's NuGet
+
+on:
+    push:
+        branches: [Release]
+    pull_request:
+        types: [closed]
+        branches: [Release]
+
+env:
+    DOTNET_VERSION: "8.0.202"
+
+jobs:
+    build-and-deploy:
+        name: Build and deploy
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+            packages: write
+        if: github.event.ref == 'refs/heads/Release' && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed'))
+        steps:
+            - name: "Checkout GitHub Action"
+              uses: actions/checkout@v4
+
+            - name: Set up .NET Core
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: ${{ env.DOTNET_VERSION }}
+
+            - name: Rebuild all plugins
+              shell: bash
+              run: |
+                  ./rebuild.sh
+
+            - name: Push NuGet packages to GitHub.com
+              run: dotnet nuget push *.nupkg -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/enotefile/index.json --force-english-output --skip-duplicate

@@ -13,6 +13,8 @@ env:
 jobs:
     build-and-deploy:
         name: Build and deploy
+        environment:
+          name: PROD
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -28,9 +30,13 @@ jobs:
               with:
                   dotnet-version: ${{ env.DOTNET_VERSION }}
 
+            - name: Add Private NuGet Registry
+              run: dotnet nuget add source --username danielpgibson --password ${{ secrets.PRIVATE_NUGET_REGISTRY_PASS }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/enotefile/index.json"
+
             - name: Rebuild all plugins
               shell: bash
               run: |
+                  ./version++.sh
                   ./rebuild.sh
 
             - name: Display structure of files

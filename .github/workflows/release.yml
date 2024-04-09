@@ -33,7 +33,6 @@ jobs:
             - name: Rebuild all plugins
               shell: bash
               run: |
-                  ./version++.sh
                   ./rebuild.sh
 
             - name: Display structure of files

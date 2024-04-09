@@ -26,8 +26,8 @@
     <None Include="../../../icon.jpg" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="IdentityServer4" Version="0.0.0-alpha.0" />
-    <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="0.0.0-alpha.0" />
+    <PackageReference Include="IdentityServer4" Version="4.2.4-alpha.0.1" />
+    <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="4.2.4-alpha.0.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 </Project>
